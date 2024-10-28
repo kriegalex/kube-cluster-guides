@@ -1,0 +1,109 @@
+---
+- name: Install Dependencies and Set Up Cluster
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - curl
+          - apt-transport-https
+          - ca-certificates
+        state: present
+        update_cache: yes
+
+- name: Install k3s Master Node
+  hosts: master
+  become: yes
+  tasks:
+    - name: Install k3s master
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -
+      args:
+        executable: /bin/bash
+
+    - name: Retrieve k3s token
+      slurp:
+        src: /var/lib/rancher/k3s/server/node-token
+      register: k3s_token
+
+    - name: Save k3s token to a file
+      copy:
+        content: "{{ k3s_token.content | b64decode }}"
+        dest: ~/k3s_token
+
+    - name: Copy kubeconfig to user directory
+      copy:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: /home/{{ ansible_user }}/.kube/config
+        remote_src: yes
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: 0600
+
+    - name: Update kubeconfig server address
+      replace:
+        path: /home/{{ ansible_user }}/.kube/config
+        regexp: '127.0.0.1'
+        replace: '{{ inventory_hostname }}'
+
+- name: Install k3s Worker Nodes
+  hosts: workers
+  become: yes
+  tasks:
+    - name: Fetch k3s token from master
+      fetch:
+        src: ~/k3s_token
+        dest: ./k3s_token
+        flat: yes
+
+    - name: Join k3s worker node
+      shell: |
+        TOKEN=$(cat ./k3s_token)
+        curl -sfL https://get.k3s.io | K3S_URL=https://k3s-master:6443 K3S_TOKEN=$TOKEN sh -
+      args:
+        executable: /bin/bash
+
+- name: Install Helm on Master Node
+  hosts: master
+  become: yes
+  tasks:
+    - name: Download Helm install script
+      get_url:
+        url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+        dest: /tmp/get-helm-3
+        mode: '0755'
+
+    - name: Install Helm
+      shell: /tmp/get-helm-3
+      args:
+        executable: /bin/bash
+
+- name: Install Longhorn via Helm
+  hosts: master
+  become: yes
+  tasks:
+    - name: Create Longhorn namespace
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          kind: Namespace
+          apiVersion: v1
+          metadata:
+            name: longhorn-system
+
+    - name: Add Longhorn Helm repository
+      shell: |
+        helm repo add longhorn https://charts.longhorn.io
+        helm repo update
+      args:
+        executable: /bin/bash
+
+    - name: Install Longhorn using Helm
+      helm:
+        name: longhorn
+        chart_repo: https://charts.longhorn.io
+        chart: longhorn
+        namespace: longhorn-system
+        create_namespace: false
+        wait: true

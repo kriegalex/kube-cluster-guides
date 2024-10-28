@@ -1,0 +1,50 @@
+---
+- name: Deploy Plex and Jellyfin
+  hosts: master
+  become: yes
+  tasks:
+    - name: Add k8s-at-home Helm repository
+      shell: |
+        helm repo add k8s-at-home https://k8s-at-home.com/charts/
+        helm repo update
+      args:
+        executable: /bin/bash
+
+    - name: Create namespace for media servers
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          kind: Namespace
+          apiVersion: v1
+          metadata:
+            name: media-servers
+
+    - name: Install Plex via Helm
+      helm:
+        name: plex
+        chart: k8s-at-home/plex
+        namespace: media-servers
+        values:
+          persistence:
+            config:
+              enabled: true
+              storageClass: longhorn
+            data:
+              enabled: true
+              storageClass: longhorn
+        wait: true
+
+    - name: Install Jellyfin via Helm
+      helm:
+        name: jellyfin
+        chart: k8s-at-home/jellyfin
+        namespace: media-servers
+        values:
+          persistence:
+            config:
+              enabled: true
+              storageClass: longhorn
+            cache:
+              enabled: true
+              storageClass: longhorn
+        wait: true
