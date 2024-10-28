@@ -7,7 +7,7 @@ This guide provides step-by-step instructions to set up a multi-node Kubernetes 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Environment](#environment)
+- [Optional Enhancements](#optional-enhancements)
 - [Control Plane Setup](docs/control-plane-setup.md)
 - [Worker Node Setup](docs/worker-node-setup.md)
 - [Network Addon Setup](docs/network-addon-setup.md)
@@ -19,17 +19,9 @@ This guide provides step-by-step instructions to set up a multi-node Kubernetes 
 
 ## Prerequisites
 
-- **Operating System**: Ubuntu 22.04.3 LTS with 6.5 kernel (HWE)
-- **Hardware Requirements**: Fast local storage on each node
-- **Network Requirements**: Simple home networking setup
-
-## Environment
-
-Ensure that all nodes (control plane and worker nodes) meet the following prerequisites:
-
-- Ubuntu 22.04 installed
-- User account with `sudo` privileges
-- Access to the internet
+- **Two or more Ubuntu Server machines** running **22.04 LTS** (might also work on Ubuntu 24.04 LTS).
+- **SSH Access**: Root or a user with sudo privileges.
+- **Stable Internet Connection** for downloading packages and container images.
 
 ## Optional Enhancements
 

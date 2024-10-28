@@ -12,6 +12,10 @@ An open-source platform designed to automate deploying, scaling, and operating c
 
 A lightweight Kubernetes distribution developed by Rancher Labs. It is optimized for resource-constrained environments and edge computing.
 
+### HA
+
+High Availability (HA) refers to a system’s ability to maintain continuous operational performance, minimizing downtime by using redundant components, such as multiple control plane nodes and load balancers in Kubernetes, to ensure resilience even if individual components fail.
+
 ### Helm
 
 A package manager for Kubernetes that simplifies the deployment and management of applications by using charts (pre-configured application resources).
