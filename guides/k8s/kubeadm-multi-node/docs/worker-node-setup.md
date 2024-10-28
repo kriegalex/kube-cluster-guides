@@ -11,6 +11,8 @@ Ensure that the worker nodes meet the same prerequisites as the control plane no
 - Install container runtime
 - Install kubeadm and kubelet
 
+---
+
 ## Disable Swap
 
 ```bash
@@ -18,13 +20,19 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 ```
 
+---
+
 ## Configure Kernel Parameters
 
 Follow the same steps as in [Control Plane Setup](control-plane-setup.md#configure-kernel-parameters).
 
+---
+
 ## Install Container Runtime
 
 Follow the steps in [Container Runtime Setup](container-runtime-setup.md).
+
+---
 
 ## Install Kubernetes Components
 
@@ -42,6 +50,8 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm
 sudo apt-mark hold kubelet kubeadm
 ```
+
+---
 
 ## Join the Cluster
 

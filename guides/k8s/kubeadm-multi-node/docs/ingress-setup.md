@@ -19,6 +19,8 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \\
     --set controller.service.externalTrafficPolicy=Local
 ```
 
+---
+
 ## Install cert-manager (Optional)
 
 Add the cert-manager Helm repository:
@@ -36,6 +38,8 @@ helm install cert-manager jetstack/cert-manager \\
     --version v1.15.1 \\
     --set installCRDs=true
 ```
+
+---
 
 ## Additional Configuration
 

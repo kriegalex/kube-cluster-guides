@@ -20,6 +20,8 @@ ipvs:
   strictARP: true
 ```
 
+---
+
 ## Deploy MetalLB
 
 Apply the MetalLB manifests:
@@ -33,6 +35,8 @@ Verify the pods:
 ```bash
 kubectl get pods -n metallb-system
 ```
+
+---
 
 ## Configure IP Address Pool
 

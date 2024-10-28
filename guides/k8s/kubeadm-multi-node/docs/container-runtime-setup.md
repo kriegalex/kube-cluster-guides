@@ -11,6 +11,8 @@ wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
+---
+
 ## Install CNI Plugins
 
 Download and install the CNI plugins:
@@ -20,6 +22,8 @@ wget https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni
 sudo mkdir -p /opt/cni/bin
 sudo tar -C /opt/cni/bin -xzvf cni-plugins-linux-amd64-v1.4.1.tgz
 ```
+
+---
 
 ## Install containerd
 
@@ -41,6 +45,8 @@ sudo mv containerd.service /usr/local/lib/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 ```
+
+---
 
 ## Configure containerd
 

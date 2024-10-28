@@ -18,6 +18,8 @@ sudo nano /etc/fstab
 
 Comment out the line containing the swap file or partition.
 
+---
+
 ## Configure Kernel Parameters
 
 Load necessary kernel modules and configure sysctl parameters.
@@ -60,11 +62,15 @@ sudo sysctl --system
 
 For more information, refer to the [Kernel Parameters Documentation](misc.md#kernel-parameters-explained).
 
+---
+
 ## Install Container Runtime
 
 Install and configure `containerd` as the container runtime.
 
 [See Container Runtime Setup](container-runtime-setup.md)
+
+---
 
 ## Install Kubernetes Components
 
@@ -113,11 +119,15 @@ By default, Pods are not scheduled on the control plane node. To allow this (e.g
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 
-### Install Helm
+---
+
+## Install Helm
 
 [See Helm Installation Instructions](helm-setup.md)
 
-### Install Network Addon
+---
+
+## Install Network Addon
 
 Install a network addon to enable pod communication.
 
