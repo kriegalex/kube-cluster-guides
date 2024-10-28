@@ -417,7 +417,7 @@ By automating the installation and configuration of **k3s**, **Helm**, **Longhor
 
 ## Glossary
 
-Please refer to the [Glossary](GLOSSARY.md) for explanations of Kubernetes and DevOps concepts used in this tutorial.
+Please refer to the [Glossary](../../../docs/glossary.md) for explanations of Kubernetes and DevOps concepts used in this tutorial.
 
 ---
 
@@ -430,18 +430,4 @@ This project is licensed under the terms of the MIT license. See the [LICENSE](L
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or additions.
-
----
-
-## Acknowledgments
-
-- **Rancher Labs** for developing k3s and Longhorn.
-- **Ansible Community** for providing an excellent automation tool.
-- **Kubernetes Community** for the powerful container orchestration platform.
-- **Helm Maintainers** for simplifying Kubernetes application deployment.
-- **k8s-at-home** for providing Helm charts for home-related applications.
-
----
-
-Happy learning and happy automating!
 
